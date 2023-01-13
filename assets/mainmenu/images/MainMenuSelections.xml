@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="MainMenuSelections.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="CreditsIdle0000" x="10" y="1090" width="895" height="250"/>
+	<SubTexture name="CreditsSelected0000" x="925" y="1090" width="895" height="250"/>
+	<SubTexture name="CreditsSelected0001" x="1840" y="1090" width="895" height="250"/>
+	<SubTexture name="CreditsSelected0002" x="2755" y="1090" width="895" height="250"/>
+	<SubTexture name="CreditsSelected0003" x="10" y="1360" width="895" height="250"/>
+	<SubTexture name="CreditsSelected0004" x="925" y="1360" width="895" height="250"/>
+	<SubTexture name="CreditsSelected0005" x="925" y="1360" width="895" height="250"/>
+	<SubTexture name="CreditsSelected0006" x="925" y="1360" width="895" height="250"/>
+	<SubTexture name="CreditsSelected0007" x="925" y="1360" width="895" height="250"/>
+	<SubTexture name="CreditsSelected0008" x="10" y="1360" width="895" height="250"/>
+	<SubTexture name="CreditsSelected0009" x="2755" y="1090" width="895" height="250"/>
+	<SubTexture name="CreditsSelected0010" x="1840" y="1090" width="895" height="250"/>
+	<SubTexture name="CreditsSelected0011" x="925" y="1090" width="895" height="250"/>
+	<SubTexture name="ExtrasIdle0000" x="10" y="10" width="1288" height="250"/>
+	<SubTexture name="ExtrasSelected0000" x="1318" y="10" width="1288" height="250"/>
+	<SubTexture name="ExtrasSelected0001" x="2626" y="10" width="1288" height="250"/>
+	<SubTexture name="ExtrasSelected0002" x="10" y="280" width="1288" height="250"/>
+	<SubTexture name="ExtrasSelected0003" x="1318" y="280" width="1288" height="250"/>
+	<SubTexture name="ExtrasSelected0004" x="2626" y="280" width="1288" height="250"/>
+	<SubTexture name="ExtrasSelected0005" x="2626" y="280" width="1288" height="250"/>
+	<SubTexture name="ExtrasSelected0006" x="2626" y="280" width="1288" height="250"/>
+	<SubTexture name="ExtrasSelected0007" x="2626" y="280" width="1288" height="250"/>
+	<SubTexture name="ExtrasSelected0008" x="1318" y="280" width="1288" height="250"/>
+	<SubTexture name="ExtrasSelected0009" x="10" y="280" width="1288" height="250"/>
+	<SubTexture name="ExtrasSelected0010" x="2626" y="10" width="1288" height="250"/>
+	<SubTexture name="ExtrasSelected0011" x="1318" y="10" width="1288" height="250"/>
+	<SubTexture name="SettingsIdle0000" x="321" y="1630" width="251" height="250"/>
+	<SubTexture name="SettingsSelected0000" x="3670" y="1090" width="291" height="291"/>
+	<SubTexture name="SettingsSelected0001" x="1840" y="1360" width="291" height="291"/>
+	<SubTexture name="SettingsSelected0002" x="2151" y="1360" width="291" height="291"/>
+	<SubTexture name="SettingsSelected0003" x="2462" y="1360" width="291" height="291"/>
+	<SubTexture name="SettingsSelected0004" x="2773" y="1360" width="291" height="291"/>
+	<SubTexture name="SettingsSelected0005" x="3084" y="1360" width="291" height="291"/>
+	<SubTexture name="SettingsSelected0006" x="3395" y="1401" width="291" height="291"/>
+	<SubTexture name="SettingsSelected0007" x="3706" y="1401" width="291" height="291"/>
+	<SubTexture name="SettingsSelected0008" x="2462" y="1360" width="291" height="291"/>
+	<SubTexture name="SettingsSelected0009" x="10" y="1630" width="291" height="291"/>
+	<SubTexture name="SettingsSelected0010" x="1840" y="1360" width="291" height="291"/>
+	<SubTexture name="SettingsSelected0011" x="3670" y="1090" width="291" height="291"/>
+	<SubTexture name="StoryIdle0000" x="10" y="550" width="1288" height="250"/>
+	<SubTexture name="StorySelected0000" x="1318" y="550" width="1288" height="250"/>
+	<SubTexture name="StorySelected0001" x="2626" y="550" width="1288" height="250"/>
+	<SubTexture name="StorySelected0002" x="10" y="820" width="1288" height="250"/>
+	<SubTexture name="StorySelected0003" x="1318" y="820" width="1288" height="250"/>
+	<SubTexture name="StorySelected0004" x="2626" y="820" width="1288" height="250"/>
+	<SubTexture name="StorySelected0005" x="2626" y="820" width="1288" height="250"/>
+	<SubTexture name="StorySelected0006" x="2626" y="820" width="1288" height="250"/>
+	<SubTexture name="StorySelected0007" x="2626" y="820" width="1288" height="250"/>
+	<SubTexture name="StorySelected0008" x="1318" y="820" width="1288" height="250"/>
+	<SubTexture name="StorySelected0009" x="10" y="820" width="1288" height="250"/>
+	<SubTexture name="StorySelected0010" x="2626" y="550" width="1288" height="250"/>
+	<SubTexture name="StorySelected0011" x="1318" y="550" width="1288" height="250"/>
+</TextureAtlas>

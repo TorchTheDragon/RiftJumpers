@@ -1,0 +1,9 @@
+https://fonts.adobe.com/fonts/arvo
+
+Size for Story and Extras:
+Font Size: 40pt
+Stroke Size: 10px
+
+Size for Credits:
+Font Size: 20pt
+Stroke Size: 5px
