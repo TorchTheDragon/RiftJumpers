@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Github.png">
+	<!-- Created with Adobe Animate version 20.5.1.31044 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="GithubIdle0000" x="291" y="10" width="260" height="258"/>
+	<SubTexture name="GithubSelected0000" x="10" y="10" width="261" height="258"/>
+</TextureAtlas>

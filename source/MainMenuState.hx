@@ -38,14 +38,14 @@ class MainMenuState extends MusicBeatState
 		'story_mode',
 		'freeplay',
 		'credits',
-		'options'
+		'options',
+		'source_code'
 
 		// Commenting till I decide if I want to use them or not
 		/*
 		#if MODS_ALLOWED 'mods', #end
 		#if ACHIEVEMENTS_ALLOWED 'awards', #end
 		#if !switch 'donate', #end
-		'source_code'
 		*/
 	];
 
@@ -180,11 +180,11 @@ class MainMenuState extends MusicBeatState
 					var menuItem:FlxSprite = new FlxSprite(0, 375);
 					menuItem.scale.x = scale;
 					menuItem.scale.y = scale;
-					menuItem.frames = Paths.getSparrowAtlas('MainMenuSelections', assetLocation);
+					menuItem.frames = Paths.getSparrowAtlas('Settings', assetLocation);
 					menuItem.animation.addByPrefix('idle', 'SettingsIdle', 24);
 					menuItem.animation.addByPrefix('selected', 'SettingsSelected', 24);
 					menuItem.animation.play('idle');
-					menuItem.x = ((FlxG.width / 2) - (menuItem.width / 2)) + 475;
+					menuItem.x = ((FlxG.width / 2) - (menuItem.width / 2)) + 150;
 					// menuItem.screenCenter(X);
 					menuItem.ID = 3;
 					menuItem.updateHitbox();
@@ -204,7 +204,18 @@ class MainMenuState extends MusicBeatState
 				}
 				case 'source_code':
 				{
-					
+					var menuItem:FlxSprite = new FlxSprite(0, 420);
+					menuItem.scale.x = scale;
+					menuItem.scale.y = scale;
+					menuItem.frames = Paths.getSparrowAtlas('Github', assetLocation);
+					menuItem.animation.addByPrefix('idle', 'GithubIdle', 24);
+					menuItem.animation.addByPrefix('selected', 'GithubSelected', 24);
+					menuItem.animation.play('idle');
+					menuItem.x = ((FlxG.width / 2) - (menuItem.width / 2)) + 375;
+					// menuItem.screenCenter(X);
+					menuItem.ID = 4;
+					menuItem.updateHitbox();
+					menuItems.add(menuItem);
 				}
 				default:
 				{
@@ -297,7 +308,10 @@ class MainMenuState extends MusicBeatState
 
 					if (FlxG.mouse.justPressed && canClick)
 					{
-						selectSumthin();
+						if (curSelected == 4)
+							FlxG.openURL('https://github.com/TorchTheDragon/RiftJumpers');
+						else
+							selectSumthin();
 					}
 				}
 		});
@@ -333,6 +347,10 @@ class MainMenuState extends MusicBeatState
 				{
 					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
 				}
+				else if (curSelected == 4)
+				{
+					FlxG.openURL('https://github.com/TorchTheDragon/RiftJumpers');
+				}
 				else
 				{
 					selectSumthin();
@@ -365,8 +383,8 @@ class MainMenuState extends MusicBeatState
 					i.updateHitbox();
 					if (i.animation.curAnim.name == 'selected')
 					{
-						i.offset.x = 11;
-						i.offset.y = 12;
+						i.offset.x = 19;
+						i.offset.y = 20;
 					}
 					else
 					{
@@ -422,8 +440,6 @@ class MainMenuState extends MusicBeatState
 							MusicBeatState.switchState(new CreditsState());
 						case 'options':
 							LoadingState.loadAndSwitchState(new options.OptionsState());
-						case 'source_code':
-							FlxG.openURL('https://github.com/TorchTheDragon/RiftJumpers');
 					}
 				});
 			}
