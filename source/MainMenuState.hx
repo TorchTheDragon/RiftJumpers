@@ -127,6 +127,7 @@ class MainMenuState extends MusicBeatState
 		}
 		*/
 
+		FlxG.mouse.enabled = true;
 		enableMouse();
 
 		for (i in menuSelections)
@@ -438,7 +439,7 @@ class MainMenuState extends MusicBeatState
 							MusicBeatState.switchState(new AchievementsMenuState());
 						case 'credits':
 							MusicBeatState.switchState(new CreditsState());
-						case 'options':
+						case 'options': 
 							LoadingState.loadAndSwitchState(new options.OptionsState());
 					}
 				});
@@ -448,14 +449,14 @@ class MainMenuState extends MusicBeatState
 
 	function enableMouse()
 	{
-		FlxG.mouse.enabled = true;
+		// FlxG.mouse.enabled = true;
 		FlxG.mouse.visible = true;
 		canClick = true;
 	}
 
 	function disableMouse()
 	{
-		FlxG.mouse.enabled = false;
+		// FlxG.mouse.enabled = false;
 		FlxG.mouse.visible = false;
 		canClick = false;
 		mouseHovering = false;
