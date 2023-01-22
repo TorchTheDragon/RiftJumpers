@@ -3428,6 +3428,96 @@ class PlayState extends MusicBeatState
 
 	public function triggerEventNote(eventName:String, value1:String, value2:String) {
 		switch(eventName) {
+			// Beginning of custom Hard Coded events
+			case 'Change Notes BF':
+				for (i in playerStrums)
+				{
+					i.texture = value1;
+					i.folder = value2;
+					i.reloadNote();
+					i.playAnim('static');
+				}
+
+				for (i in unspawnNotes)
+				{
+					if (i.mustPress && (i.noteType == '' || i.noteType == null))
+					{
+						i.texture = value1;
+						i.folder = value2;
+						i.reloadNote('', value1);
+						if (i.isSustainNote)
+						{
+							i.animation.play(i.colArray[i.noteData] + 'holdend');
+							i.updateHitbox();
+							if (i.prevNote.isSustainNote)
+							{
+								i.prevNote.animation.play(i.colArray[i.noteData] + 'hold');
+								i.prevNote.updateHitbox();
+							}
+						}
+						else
+						{
+							i.animation.play(i.colArray[i.noteData] + 'Scroll');
+						}
+					}
+				}
+			
+			case 'Change BF Splashes':
+				for (i in unspawnNotes)
+				{
+					if (i.mustPress && (i.noteType == '' || i.noteType == null))
+					{
+						i.noteSplashTexture = value1;
+						i.noteSplashFolder = value2;
+						i.reloadNote();
+					}
+				}
+
+			case 'Change Opponent Splashes':
+				for (i in unspawnNotes)
+				{
+					if (!i.mustPress && (i.noteType == '' || i.noteType == null))
+					{
+						i.noteSplashTexture = value1;
+						i.noteSplashFolder = value2;
+						i.reloadNote();
+					}
+				}
+			
+			case 'Change Notes Opponent':
+				for (i in opponentStrums)
+				{
+					i.texture = value1;
+					i.folder = value2;
+					i.reloadNote();
+					i.playAnim('static');
+				}
+
+				for (i in unspawnNotes)
+				{
+					if (!i.mustPress && (i.noteType == '' || i.noteType == null))
+					{
+						i.texture = value1;
+						i.folder = value2;
+						i.reloadNote('', value1);
+						if (i.isSustainNote)
+						{
+							i.animation.play(i.colArray[i.noteData] + 'holdend');
+							i.updateHitbox();
+							if (i.prevNote.isSustainNote)
+							{
+								i.prevNote.animation.play(i.colArray[i.noteData] + 'hold');
+								i.prevNote.updateHitbox();
+							}
+						}
+						else
+						{
+							i.animation.play(i.colArray[i.noteData] + 'Scroll');
+						}
+					}
+				}
+
+			// Ending of custom Hard Coded events
 			case 'Dadbattle Spotlight':
 				var val:Null<Int> = Std.parseInt(value1);
 				if(val == null) val = 0;
@@ -4766,6 +4856,8 @@ class PlayState extends MusicBeatState
 	public function spawnNoteSplash(x:Float, y:Float, data:Int, ?note:Note = null) {
 		var skin:String = 'noteSplashes';
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
+		var folder:String = 'shared';
+		if(PlayState.SONG.splashFolder != null && PlayState.SONG.splashFolder.length > 0) folder = PlayState.SONG.splashFolder;
 
 		var hue:Float = 0;
 		var sat:Float = 0;
@@ -4777,6 +4869,7 @@ class PlayState extends MusicBeatState
 			brt = ClientPrefs.arrowHSV[data][2] / 100;
 			if(note != null) {
 				skin = note.noteSplashTexture;
+				folder = note.noteSplashFolder;
 				hue = note.noteSplashHue;
 				sat = note.noteSplashSat;
 				brt = note.noteSplashBrt;
@@ -4784,7 +4877,7 @@ class PlayState extends MusicBeatState
 		}
 
 		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
-		splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
+		splash.setupNoteSplash(x, y, data, skin, hue, sat, brt, folder);
 		grpNoteSplashes.add(splash);
 	}
 

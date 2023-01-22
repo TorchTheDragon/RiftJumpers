@@ -26,6 +26,15 @@ class StrumNote extends FlxSprite
 		return value;
 	}
 
+	public var folder(default, set):String = null;
+	private function set_folder(value:String):String {
+		if(folder != value) {
+			folder = value;
+			reloadNote();
+		}
+		return value;
+	}
+
 	public function new(x:Float, y:Float, leData:Int, player:Int) {
 		colorSwap = new ColorSwap();
 		shader = colorSwap.shader;
@@ -37,6 +46,10 @@ class StrumNote extends FlxSprite
 		var skin:String = 'NOTE_assets';
 		if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
 		texture = skin; //Load texture and anims
+
+		var daPath:String = 'shared';
+		if(PlayState.SONG.arrowFolder != null && PlayState.SONG.arrowFolder.length > 1) daPath = PlayState.SONG.arrowFolder;
+		folder = daPath;
 
 		scrollFactor.set();
 	}
@@ -82,7 +95,7 @@ class StrumNote extends FlxSprite
 		}
 		else
 		{
-			frames = Paths.getSparrowAtlas(texture);
+			frames = Paths.getSparrowAtlas(texture, folder);
 			animation.addByPrefix('green', 'arrowUP');
 			animation.addByPrefix('blue', 'arrowDOWN');
 			animation.addByPrefix('purple', 'arrowLEFT');

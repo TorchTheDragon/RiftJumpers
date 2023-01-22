@@ -16,7 +16,10 @@ class NoteSplash extends FlxSprite
 		var skin:String = 'noteSplashes';
 		if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) skin = PlayState.SONG.splashSkin;
 
-		loadAnims(skin);
+		var folder:String = 'shared';
+		if(PlayState.SONG.splashFolder != null && PlayState.SONG.splashFolder.length > 0) folder = PlayState.SONG.splashFolder;
+
+		loadAnims(skin, folder);
 		
 		colorSwap = new ColorSwap();
 		shader = colorSwap.shader;
@@ -25,7 +28,7 @@ class NoteSplash extends FlxSprite
 		antialiasing = ClientPrefs.globalAntialiasing;
 	}
 
-	public function setupNoteSplash(x:Float, y:Float, note:Int = 0, texture:String = null, hueColor:Float = 0, satColor:Float = 0, brtColor:Float = 0) {
+	public function setupNoteSplash(x:Float, y:Float, note:Int = 0, texture:String = null, hueColor:Float = 0, satColor:Float = 0, brtColor:Float = 0, folder:String = null) {
 		setPosition(x - Note.swagWidth * 0.95, y - Note.swagWidth);
 		alpha = 0.6;
 
@@ -34,8 +37,13 @@ class NoteSplash extends FlxSprite
 			if(PlayState.SONG.splashSkin != null && PlayState.SONG.splashSkin.length > 0) texture = PlayState.SONG.splashSkin;
 		}
 
+		if(folder == null) {
+			folder = 'shared';
+			if(PlayState.SONG.splashFolder != null && PlayState.SONG.splashFolder.length > 0) folder = PlayState.SONG.splashSkin;
+		}
+
 		if(textureLoaded != texture) {
-			loadAnims(texture);
+			loadAnims(texture, folder);
 		}
 		colorSwap.hue = hueColor;
 		colorSwap.saturation = satColor;
@@ -47,8 +55,12 @@ class NoteSplash extends FlxSprite
 		if(animation.curAnim != null)animation.curAnim.frameRate = 24 + FlxG.random.int(-2, 2);
 	}
 
-	function loadAnims(skin:String) {
-		frames = Paths.getSparrowAtlas(skin);
+	function loadAnims(skin:String, ?folder:String = 'shared') {
+		if(folder == null || folder == '') folder = 'shared';
+
+		if(folder == 'customnotes') skin = 'splashes/' + skin;
+
+		frames = Paths.getSparrowAtlas(skin, folder);
 		for (i in 1...3) {
 			animation.addByPrefix("note1-" + i, "note splash blue " + i, 24, false);
 			animation.addByPrefix("note2-" + i, "note splash green " + i, 24, false);

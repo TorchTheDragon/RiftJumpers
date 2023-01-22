@@ -29,6 +29,8 @@ typedef SwagSong =
 	var arrowSkin:String;
 	var splashSkin:String;
 	var validScore:Bool;
+	var arrowFolder:String;
+	var splashFolder:String;
 }
 
 class Song
@@ -39,7 +41,9 @@ class Song
 	public var bpm:Float;
 	public var needsVoices:Bool = true;
 	public var arrowSkin:String;
+	public var arrowFolder:String;
 	public var splashSkin:String;
+	public var splashFolder:String;
 	public var speed:Float = 1;
 	public var stage:String;
 	public var player1:String = 'bf';
@@ -48,6 +52,16 @@ class Song
 
 	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format
 	{
+		if (songJson.arrowFolder == null)
+		{
+			songJson.arrowFolder = '';
+		}
+		
+		if (songJson.splashFolder == null)
+		{
+			songJson.splashFolder = '';
+		}
+		
 		if(songJson.gfVersion == null)
 		{
 			songJson.gfVersion = songJson.player3;

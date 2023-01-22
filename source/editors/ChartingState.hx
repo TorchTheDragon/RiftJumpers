@@ -91,7 +91,11 @@ class ChartingState extends MusicBeatState
 		['Screen Shake', "Value 1: Camera shake\nValue 2: HUD shake\n\nEvery value works as the following example: \"1, 0.05\".\nThe first number (1) is the duration.\nThe second number (0.05) is the intensity."],
 		['Change Character', "Value 1: Character to change (Dad, BF, GF)\nValue 2: New character's name"],
 		['Change Scroll Speed', "Value 1: Scroll Speed Multiplier (1 is default)\nValue 2: Time it takes to change fully in seconds."],
-		['Set Property', "Value 1: Variable name\nValue 2: New value"]
+		['Set Property', "Value 1: Variable name\nValue 2: New value"],
+		['Change Notes BF', "Value 1: Name of Notes Texture\nValue 2: Folder Location"],
+		['Change Notes Opponent', "Value 1: Name of Notes Texture\nValue 2: Folder Location"],
+		['Change BF Splashes', "Value 1: Note of Splash Texture\nValue 2: Folder Location"],
+		['Change Opponent Splashes', "Value 1: Note of Splash Texture\nValue 2: Folder Location"]
 	];
 
 	var _file:FileReference;
@@ -223,7 +227,9 @@ class ChartingState extends MusicBeatState
 				gfVersion: 'gf',
 				speed: 1,
 				stage: 'stage',
-				validScore: false
+				validScore: false,
+				arrowFolder: '',
+				splashFolder: ''
 			};
 			addSection();
 			PlayState.SONG = _song;
@@ -401,6 +407,8 @@ class ChartingState extends MusicBeatState
 	var UI_songTitle:FlxUIInputText;
 	var noteSkinInputText:FlxUIInputText;
 	var noteSplashesInputText:FlxUIInputText;
+	var noteSkinFolderInputText:FlxUIInputText;
+	var noteSplashesFolderInputText:FlxUIInputText;
 	var stageDropDown:FlxUIDropDownMenuCustom;
 	var sliderRate:FlxUISlider;
 	function addSongUI():Void
@@ -597,8 +605,18 @@ class ChartingState extends MusicBeatState
 		noteSkinInputText = new FlxUIInputText(player2DropDown.x, player2DropDown.y + 50, 150, skin, 8);
 		blockPressWhileTypingOn.push(noteSkinInputText);
 
+		var folder = PlayState.SONG.arrowFolder;
+		if(folder == null) folder = '';
+		noteSkinFolderInputText = new FlxUIInputText(noteSkinInputText.x + 160, noteSkinInputText.y, 100, folder, 8);
+		blockPressWhileTypingOn.push(noteSkinFolderInputText);
+
 		noteSplashesInputText = new FlxUIInputText(noteSkinInputText.x, noteSkinInputText.y + 35, 150, _song.splashSkin, 8);
 		blockPressWhileTypingOn.push(noteSplashesInputText);
+
+		var folder2 = PlayState.SONG.splashFolder;
+		if(folder2 == null) folder = '';
+		noteSplashesFolderInputText = new FlxUIInputText(noteSkinFolderInputText.x, noteSplashesInputText.y, 100, folder2, 8);
+		blockPressWhileTypingOn.push(noteSplashesFolderInputText);
 
 		var reloadNotesButton:FlxButton = new FlxButton(noteSplashesInputText.x + 5, noteSplashesInputText.y + 20, 'Change Notes', function() {
 			_song.arrowSkin = noteSkinInputText.text;
@@ -622,7 +640,9 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(stepperSpeed);
 		tab_group_song.add(reloadNotesButton);
 		tab_group_song.add(noteSkinInputText);
+		tab_group_song.add(noteSkinFolderInputText);
 		tab_group_song.add(noteSplashesInputText);
+		tab_group_song.add(noteSplashesFolderInputText);
 		tab_group_song.add(new FlxText(stepperBPM.x, stepperBPM.y - 15, 0, 'Song BPM:'));
 		tab_group_song.add(new FlxText(stepperBPM.x + 100, stepperBPM.y - 15, 0, 'Song Offset:'));
 		tab_group_song.add(new FlxText(stepperSpeed.x, stepperSpeed.y - 15, 0, 'Song Speed:'));
@@ -631,7 +651,9 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(new FlxText(player1DropDown.x, player1DropDown.y - 15, 0, 'Boyfriend:'));
 		tab_group_song.add(new FlxText(stageDropDown.x, stageDropDown.y - 15, 0, 'Stage:'));
 		tab_group_song.add(new FlxText(noteSkinInputText.x, noteSkinInputText.y - 15, 0, 'Note Texture:'));
+		tab_group_song.add(new FlxText(noteSkinFolderInputText.x, noteSkinFolderInputText.y - 15, 0, 'Texture Path:'));
 		tab_group_song.add(new FlxText(noteSplashesInputText.x, noteSplashesInputText.y - 15, 0, 'Note Splashes Texture:'));
+		tab_group_song.add(new FlxText(noteSplashesFolderInputText.x, noteSplashesFolderInputText.y -15, 0, 'Splashes Path:'));
 		tab_group_song.add(player2DropDown);
 		tab_group_song.add(gfVersionDropDown);
 		tab_group_song.add(player1DropDown);
@@ -1468,6 +1490,7 @@ class ChartingState extends MusicBeatState
 		else if(id == FlxUIInputText.CHANGE_EVENT && (sender is FlxUIInputText)) {
 			if(sender == noteSplashesInputText) {
 				_song.splashSkin = noteSplashesInputText.text;
+				_song.splashFolder = noteSplashesFolderInputText.text;
 			}
 			else if(curSelectedNote != null)
 			{

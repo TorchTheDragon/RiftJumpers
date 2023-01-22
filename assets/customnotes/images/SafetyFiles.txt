@@ -1,0 +1,1 @@
+HURTNOTE_assets and NOTE_assets are here in case the game does some fuckery and tries to load default stuff from this folder because of the way I have poorly set this up

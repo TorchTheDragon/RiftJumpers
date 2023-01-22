@@ -367,7 +367,10 @@ class Paths
 			localTrackedAssets.push(path);
 			return currentTrackedAssets.get(path);
 		}
+		/*
+		// This is commented just to see if I can make custom note loading faster lol
 		trace('oh no its returning null NOOOO');
+		*/
 		return null;
 	}
 
