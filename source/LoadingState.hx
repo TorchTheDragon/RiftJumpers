@@ -16,6 +16,10 @@ import lime.utils.AssetManifest;
 
 import haxe.io.Path;
 
+// Added for new loading bar
+import flixel.ui.FlxBar;
+import flixel.util.FlxColor;
+
 class LoadingState extends MusicBeatState
 {
 	inline static var MIN_TIME = 1.0;
@@ -42,6 +46,8 @@ class LoadingState extends MusicBeatState
 
 	var funkay:FlxSprite;
 	var loadBar:FlxSprite;
+
+	var bgBar:FlxSprite;
 	override function create()
 	{
 		var bg:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xffcaff4d);
@@ -54,9 +60,15 @@ class LoadingState extends MusicBeatState
 		funkay.scrollFactor.set();
 		funkay.screenCenter();
 
-		loadBar = new FlxSprite(0, FlxG.height - 20).makeGraphic(FlxG.width, 10, 0xffff16d2);
+		loadBar = new FlxSprite(0, FlxG.height - 50).makeGraphic(Std.int(FlxG.width * 0.9), 20, FlxColor.WHITE);
 		loadBar.screenCenter(X);
 		loadBar.antialiasing = ClientPrefs.globalAntialiasing;
+
+		bgBar = new FlxSprite(loadBar.x, loadBar.y).makeGraphic(Std.int(loadBar.width), Std.int(loadBar.height), 0xFF2b2b2b);
+		bgBar.screenCenter(X);
+		bgBar.antialiasing = ClientPrefs.globalAntialiasing;
+		
+		add(bgBar);
 		add(loadBar);
 		
 		initSongsManifest().onComplete
@@ -161,6 +173,7 @@ class LoadingState extends MusicBeatState
 		Paths.setCurrentLevel(directory);
 		trace('Setting asset folder to ' + directory);
 
+		// Commented to have loading state on all songs
 		#if NO_PRELOAD_ALL
 		var loaded:Bool = false;
 		if (PlayState.SONG != null) {
@@ -176,6 +189,7 @@ class LoadingState extends MusicBeatState
 		return target;
 	}
 	
+	// Commented to have loading state on all songs
 	#if NO_PRELOAD_ALL
 	static function isSoundLoaded(path:String):Bool
 	{
