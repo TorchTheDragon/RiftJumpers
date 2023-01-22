@@ -67,7 +67,8 @@ class ChartingState extends MusicBeatState
 		'Hey!',
 		'Hurt Note',
 		'GF Sing',
-		'No Animation'
+		'No Animation',
+		'Lights Out'
 	];
 	private var noteTypeIntMap:Map<Int, String> = new Map<Int, String>();
 	private var noteTypeMap:Map<String, Null<Int>> = new Map<String, Null<Int>>();
@@ -92,6 +93,7 @@ class ChartingState extends MusicBeatState
 		['Change Character', "Value 1: Character to change (Dad, BF, GF)\nValue 2: New character's name"],
 		['Change Scroll Speed', "Value 1: Scroll Speed Multiplier (1 is default)\nValue 2: Time it takes to change fully in seconds."],
 		['Set Property', "Value 1: Variable name\nValue 2: New value"],
+		['Lights Out Values', "Value 1: Time it takes for the HUD to come back\nValue 2: Time it takes for the Black Screen to disappear"],
 		['Change Notes BF', "Value 1: Name of Notes Texture\nValue 2: Folder Location"],
 		['Change Notes Opponent', "Value 1: Name of Notes Texture\nValue 2: Folder Location"],
 		['Change BF Splashes', "Value 1: Note of Splash Texture\nValue 2: Folder Location"],
@@ -620,6 +622,7 @@ class ChartingState extends MusicBeatState
 
 		var reloadNotesButton:FlxButton = new FlxButton(noteSplashesInputText.x + 5, noteSplashesInputText.y + 20, 'Change Notes', function() {
 			_song.arrowSkin = noteSkinInputText.text;
+			_song.arrowFolder = noteSkinFolderInputText.text;
 			updateGrid();
 		});
 

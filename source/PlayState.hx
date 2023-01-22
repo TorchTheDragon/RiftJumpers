@@ -325,6 +325,10 @@ class PlayState extends MusicBeatState
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
 
+	// Lights Out var's
+	private var hudTime:Float = 1.0;
+	private var darknessTime:Float = 1.0;
+
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
@@ -3429,6 +3433,16 @@ class PlayState extends MusicBeatState
 	public function triggerEventNote(eventName:String, value1:String, value2:String) {
 		switch(eventName) {
 			// Beginning of custom Hard Coded events
+			case 'Lights Out Values':
+				var val:Null<Float> = Std.parseFloat(value1);
+				if (val == null) val = 1.0;
+
+				var val2:Null<Float> = Std.parseFloat(value2);
+				if (val2 == null) val2 = 2.0;
+
+				hudTime = val;
+				darknessTime = val2;
+
 			case 'Change Notes BF':
 				for (i in playerStrums)
 				{
@@ -4772,6 +4786,33 @@ class PlayState extends MusicBeatState
 					note.destroy();
 				}
 				return;
+			}
+
+			switch(note.noteType) {
+				case 'Lights Out':
+				{
+					var blackScreen:FlxSprite = new FlxSprite();
+					blackScreen.makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
+					blackScreen.alpha = 1.0;
+					blackScreen.screenCenter(XY);
+					camHUD.alpha = 0.0;
+					add(blackScreen);
+					
+					new FlxTimer().start(hudTime, function(fadeIn:FlxTimer){
+						FlxTween.tween(camHUD, {alpha: 1.0}, hudTime * 1.5, {
+							ease: FlxEase.linear
+						});
+					});
+
+					new FlxTimer().start(darknessTime, function(fadeOut:FlxTimer){
+						FlxTween.tween(blackScreen, {alpha: 0}, darknessTime * 1.5, {
+							ease: FlxEase.linear,
+							onComplete: function(twn:FlxTween) {
+								remove(blackScreen);
+							}
+						});
+					});
+				}
 			}
 
 			if (!note.isSustainNote)
