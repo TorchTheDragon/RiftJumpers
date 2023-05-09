@@ -21,6 +21,8 @@ import Achievements;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
 
+import TorchsCoolFunctions as QuickFunc;
+
 using StringTools;
 
 class MainMenuState extends MusicBeatState
@@ -130,6 +132,7 @@ class MainMenuState extends MusicBeatState
 		FlxG.mouse.enabled = true;
 		enableMouse();
 
+		// New Menu Selection Method - Torch
 		for (i in menuSelections)
 		{
 			switch (i)
@@ -285,6 +288,7 @@ class MainMenuState extends MusicBeatState
 		if (FlxG.mouse.justMoved)
 			otherButtonPressed = false;
 
+		// Mouse Selection - Torch
 		menuItems.forEach(function(spr:FlxSprite)
 		{
 			if (mouseHovering && !otherButtonPressed)
@@ -310,7 +314,7 @@ class MainMenuState extends MusicBeatState
 					if (FlxG.mouse.justPressed && canClick)
 					{
 						if (curSelected == 4)
-							FlxG.openURL('https://github.com/TorchTheDragon/RiftJumpers');
+							QuickFunc.openLink('https://github.com/TorchTheDragon/RiftJumpers');
 						else
 							selectSumthin();
 					}
@@ -346,11 +350,11 @@ class MainMenuState extends MusicBeatState
 				otherButtonPressed = true;
 				if (menuSelections[curSelected] == 'donate')
 				{
-					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
+					QuickFunc.openLink('https://ninja-muffin24.itch.io/funkin');
 				}
 				else if (curSelected == 4)
 				{
-					FlxG.openURL('https://github.com/TorchTheDragon/RiftJumpers');
+					QuickFunc.openLink('https://github.com/TorchTheDragon/RiftJumpers');
 				}
 				else
 				{
