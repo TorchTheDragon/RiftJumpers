@@ -27,7 +27,8 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var riftJumpersVersion:String = '0.0.1'; //This is also used for Discord RPC
+	public static var riftJumpersVersion:String = '0.0.3'; //This is also used for Discord RPC
+
 	public static var curSelected:Int = 0;
 
 	private var assetLocation:String = 'mainmenu';
