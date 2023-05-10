@@ -157,18 +157,28 @@ class Note extends FlxSprite
 						missHealth = 0.3;
 					}
 					hitCausesMiss = true;
+					
 				case 'Lights Out':
 					ignoreNote = mustPress;
 					folder = 'customnotes';
 					reloadNote('specialNotes/', 'lightsout', null);
 					lowPriority = true;
+
 				case 'Alt Animation':
 					animSuffix = '-alt';
+
 				case 'No Animation':
 					noAnimation = true;
 					noMissAnimation = true;
+
 				case 'GF Sing':
 					gfNote = true;
+
+				case 'Behind Note':
+					ignoreNote = mustPress;
+					colorSwap.hue = 0;
+					colorSwap.saturation = -50;
+					colorSwap.brightness = 0;
 			}
 			noteType = value;
 		}

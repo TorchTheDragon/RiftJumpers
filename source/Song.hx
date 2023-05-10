@@ -31,6 +31,11 @@ typedef SwagSong =
 	var validScore:Bool;
 	var arrowFolder:String;
 	var splashFolder:String;
+
+	var secondOpponentAlive:Bool;
+	var secondBFAlive:Bool;
+	var secondOpponent:String;
+	var secondBF:String;
 }
 
 class Song
@@ -49,6 +54,10 @@ class Song
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
 	public var gfVersion:String = 'gf';
+	public var secondOpponentAlive:Bool = false;
+	public var secondBFAlive:Bool = false;
+	public var secondOpponent:String = 'mom';
+	public var secondBF:String = 'pico-player';
 
 	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format
 	{
@@ -60,6 +69,16 @@ class Song
 		if (songJson.splashFolder == null)
 		{
 			songJson.splashFolder = '';
+		}
+
+		if (songJson.secondOpponentAlive == null)
+		{
+			songJson.secondOpponentAlive = false;
+		}
+
+		if (songJson.secondBFAlive == null)
+		{
+			songJson.secondBFAlive = false;
 		}
 		
 		if(songJson.gfVersion == null)

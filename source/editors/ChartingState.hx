@@ -68,7 +68,8 @@ class ChartingState extends MusicBeatState
 		'Hurt Note',
 		'GF Sing',
 		'No Animation',
-		'Lights Out'
+		'Lights Out',
+		'Behind Note'
 	];
 	private var noteTypeIntMap:Map<Int, String> = new Map<Int, String>();
 	private var noteTypeMap:Map<String, Null<Int>> = new Map<String, Null<Int>>();
@@ -231,7 +232,11 @@ class ChartingState extends MusicBeatState
 				stage: 'stage',
 				validScore: false,
 				arrowFolder: '',
-				splashFolder: ''
+				splashFolder: '',
+				secondOpponentAlive: false,
+				secondBFAlive: false,
+				secondOpponent: 'mom',
+				secondBF: 'pico-player'
 			};
 			addSection();
 			PlayState.SONG = _song;
@@ -413,6 +418,7 @@ class ChartingState extends MusicBeatState
 	var noteSplashesFolderInputText:FlxUIInputText;
 	var stageDropDown:FlxUIDropDownMenuCustom;
 	var sliderRate:FlxUISlider;
+
 	function addSongUI():Void
 	{
 		UI_songTitle = new FlxUIInputText(10, 10, 70, _song.song, 8);
@@ -557,6 +563,34 @@ class ChartingState extends MusicBeatState
 		player2DropDown.selectedLabel = _song.player2;
 		blockPressWhileScrolling.push(player2DropDown);
 
+		var otherOpponentDropdown = new FlxUIDropDownMenuCustom(gfVersionDropDown.x + 140, gfVersionDropDown.y, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String) 
+		{
+			_song.secondOpponent = characters[Std.parseInt(character)];
+		});
+		otherOpponentDropdown.selectedLabel = _song.secondOpponent;
+		blockPressWhileScrolling.push(otherOpponentDropdown);
+
+		var otherBFDropdown = new FlxUIDropDownMenuCustom(player2DropDown.x + 140, player2DropDown.y, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String) 
+		{
+			_song.secondBF = characters[Std.parseInt(character)];
+		});
+		otherBFDropdown.selectedLabel = _song.secondBF;
+		blockPressWhileScrolling.push(otherBFDropdown);
+
+		var otherOpponentActive = new FlxUICheckBox(otherOpponentDropdown.x + 65, otherOpponentDropdown.y - 20, null, null, "OPP2 On?", 100);
+		otherOpponentActive.checked = _song.secondOpponentAlive;
+		otherOpponentActive.callback = function()
+		{
+			_song.secondOpponentAlive = otherOpponentActive.checked;
+		};
+
+		var otherBFActive = new FlxUICheckBox(otherBFDropdown.x + 65, otherBFDropdown.y - 20, null, null, "BF2 On?", 100);
+		otherBFActive.checked = _song.secondBFAlive;
+		otherBFActive.callback = function()
+		{
+			_song.secondBFAlive = otherBFActive.checked;
+		};
+
 		#if MODS_ALLOWED
 		var directories:Array<String> = [Paths.mods('stages/'), Paths.mods(Paths.currentModDirectory + '/stages/'), Paths.getPreloadPath('stages/')];
 		for(mod in Paths.getGlobalMods())
@@ -646,12 +680,18 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(noteSkinFolderInputText);
 		tab_group_song.add(noteSplashesInputText);
 		tab_group_song.add(noteSplashesFolderInputText);
+		tab_group_song.add(otherOpponentDropdown);
+		tab_group_song.add(otherBFDropdown);
+		tab_group_song.add(otherOpponentActive);
+		tab_group_song.add(otherBFActive);
 		tab_group_song.add(new FlxText(stepperBPM.x, stepperBPM.y - 15, 0, 'Song BPM:'));
 		tab_group_song.add(new FlxText(stepperBPM.x + 100, stepperBPM.y - 15, 0, 'Song Offset:'));
 		tab_group_song.add(new FlxText(stepperSpeed.x, stepperSpeed.y - 15, 0, 'Song Speed:'));
 		tab_group_song.add(new FlxText(player2DropDown.x, player2DropDown.y - 15, 0, 'Opponent:'));
 		tab_group_song.add(new FlxText(gfVersionDropDown.x, gfVersionDropDown.y - 15, 0, 'Girlfriend:'));
 		tab_group_song.add(new FlxText(player1DropDown.x, player1DropDown.y - 15, 0, 'Boyfriend:'));
+		tab_group_song.add(new FlxText(otherOpponentDropdown.x, otherOpponentDropdown.y - 15, 0, 'Opponent 2:'));
+		tab_group_song.add(new FlxText(otherBFDropdown.x, otherBFDropdown.y - 15, 0, 'BF 2:'));
 		tab_group_song.add(new FlxText(stageDropDown.x, stageDropDown.y - 15, 0, 'Stage:'));
 		tab_group_song.add(new FlxText(noteSkinInputText.x, noteSkinInputText.y - 15, 0, 'Note Texture:'));
 		tab_group_song.add(new FlxText(noteSkinFolderInputText.x, noteSkinFolderInputText.y - 15, 0, 'Texture Path:'));
