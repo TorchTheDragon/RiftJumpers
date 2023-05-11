@@ -28,6 +28,8 @@ haxelib git linc_luajit https://github.com/nebulazorua/linc_luajit.git
 haxelib git hxvm-luajit https://github.com/nebulazorua/hxvm-luajit
 haxelib git extension-webm https://github.com/KadeDev/extension-webm
 haxelib run lime rebuild extension-webm windows
+haxelib git systools https://github.com/haya3218/systools
+haxelib run lime rebuild systools windows
 haxelib install actuate
 haxelib list
 pause
