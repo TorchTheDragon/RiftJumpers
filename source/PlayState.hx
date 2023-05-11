@@ -2533,13 +2533,14 @@ class PlayState extends MusicBeatState
 
 		// Background Notes Data
 		var backData:Array<SwagSection> = null;
+		var difArray:Array<String> = ['easy', '', 'hard']; // Only using this here
 
-		if (FileSystem.exists(Paths.json(songName + '/${curSong.toLowerCase().replace(' ', '-')}-background')))
+		if (FileSystem.exists(Paths.json(songName + '/${curSong.toLowerCase().replace(' ', '-')}-${difArray[storyDifficulty]}-background')))
 		{
 			backChartData = curSong.toLowerCase().replace(' ', '-');
 	
 			if (backChartData != '')
-				backData = Song.loadFromJson(backChartData + "-background", backChartData).notes;
+				backData = Song.loadFromJson(backChartData + '-${difArray[storyDifficulty]}-background', backChartData).notes;
 		}
 
 		#if MODS_ALLOWED
