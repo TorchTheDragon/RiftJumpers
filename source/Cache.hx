@@ -44,14 +44,13 @@ class Cache extends MusicBeatState
     var specialNotes = [];
 
     var loadingText:FlxText;
-    var loadingMessage:String = '';   
+    var loadingMessage:String = 'Caching';   
     var toBeLoaded:String = ''; 
 
     var totalNum:Int = 0;
     var totalLoaded:Int = 0;
 
     var bar:FlxBar;
-
 
     override function create()
     {
@@ -61,8 +60,6 @@ class Cache extends MusicBeatState
 
         bitmapData = new Map<String,FlxGraphic>();
 		bitmapData2 = new Map<String,FlxGraphic>();
-
-        loadingMessage = 'Loading...';
 
         var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('loadingscreen-' + FlxG.random.int(1, 4), 'loadingscreens')); // Change the max number when adding more screens
         menuBG.screenCenter();
@@ -122,7 +119,7 @@ class Cache extends MusicBeatState
         bar.createFilledBar(0xFF2b2b2b, FlxColor.WHITE);
         add(bar);
 
-        loadingText = new FlxText(0, bar.y - 50, 0, loadingMessage, 12);
+        loadingText = new FlxText(0, bar.y - 50, 0, loadingMessage + '...', 12);
         loadingText.screenCenter(X);
         loadingText.scrollFactor.set();
 		loadingText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -130,6 +127,7 @@ class Cache extends MusicBeatState
 
         sys.thread.Thread.create(() -> {
 			cache();
+			//fixPosition();
 		});
 
         super.create();
@@ -140,20 +138,35 @@ class Cache extends MusicBeatState
         super.update(elapsed);
     }
 
+	function fixPosition()
+	{
+		loadingText.x = (FlxG.width/2) - (loadingText.width/2);
+	}
+
     function cache()
     {
         #if !linux
-			var sound1:FlxSound;
-			sound1 = new FlxSound().loadEmbedded(Paths.voices('fresh'));
-			sound1.play();
-			sound1.volume = 0.00001;
-			FlxG.sound.list.add(sound1);
+		loadingText.text = loadingMessage + ' Fresh Voices...';
+		fixPosition();
 
-			var sound2:FlxSound;
-			sound2 = new FlxSound().loadEmbedded(Paths.inst('fresh'));
-			sound2.play();
-			sound2.volume = 0.00001;
-			FlxG.sound.list.add(sound2);
+		var sound1:FlxSound;
+		sound1 = new FlxSound().loadEmbedded(Paths.voices('fresh'));
+		sound1.play();
+		sound1.volume = 0.00001;
+		FlxG.sound.list.add(sound1);
+
+		loadingText.text = loadingMessage + ' Fresh Inst...';
+		fixPosition();
+
+		var sound2:FlxSound;
+		sound2 = new FlxSound().loadEmbedded(Paths.inst('fresh'));
+		sound2.play();
+		sound2.volume = 0.00001;
+		FlxG.sound.list.add(sound2);
+
+		loadingText.text = loadingMessage + ' Characters...';
+		fixPosition();
+		
 		for (i in images)
 		{
 			var replaced = i.replace(".png","");
@@ -165,6 +178,9 @@ class Cache extends MusicBeatState
 			trace(i);
             totalLoaded++;
 		}
+		
+		loadingText.text = loadingMessage + ' Main Menu Assets...';
+		fixPosition();
 
         for (i in mainMenu)
 		{
@@ -178,6 +194,9 @@ class Cache extends MusicBeatState
             totalLoaded++;
 		}
 
+		loadingText.text = loadingMessage + ' Custom Note Assets...';
+		fixPosition();
+
         for (i in customNotes)
 		{
 			var replaced = i.replace(".png","");
@@ -189,6 +208,9 @@ class Cache extends MusicBeatState
 			trace(i);
             totalLoaded++;
 		}
+		
+		loadingText.text = loadingMessage + ' Special Note Assets...';
+		fixPosition();
 
         for (i in specialNotes)
 		{
@@ -201,6 +223,9 @@ class Cache extends MusicBeatState
 			trace(i);
             totalLoaded++;
 		}
+		
+		loadingText.text = loadingMessage + ' Splashes Assets...';
+		fixPosition();
 
         for (i in splashes)
 		{
@@ -213,6 +238,9 @@ class Cache extends MusicBeatState
 			trace(i);
             totalLoaded++;
 		}
+		
+		loadingText.text = loadingMessage + ' Music...';
+		fixPosition();
 
 		for (i in music)
 		{
