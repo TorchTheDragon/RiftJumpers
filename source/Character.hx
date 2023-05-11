@@ -33,6 +33,9 @@ typedef CharacterFile = {
 	var flip_x:Bool;
 	var no_antialiasing:Bool;
 	var healthbar_colors:Array<Int>;
+
+	var noteFile:String;
+	var notePath:String;
 }
 
 typedef AnimArray = {
@@ -77,6 +80,10 @@ class Character extends FlxSprite
 	public var noAntialiasing:Bool = false;
 	public var originalFlipX:Bool = false;
 	public var healthColorArray:Array<Int> = [255, 0, 0];
+
+	// Custom notes per char - Torch
+	public var noteFile:String = '';
+	public var notePath:String = '';
 
 	public static var DEFAULT_CHARACTER:String = 'bf'; //In case a character is missing, it will use BF on its place
 	public function new(x:Float, y:Float, ?character:String = 'bf', ?isPlayer:Bool = false)
@@ -212,6 +219,18 @@ class Character extends FlxSprite
 				} else {
 					quickAnimAdd('idle', 'BF idle dance');
 				}
+				
+				// Torch - This is for custom Note Styles per character
+				if (json.noteFile != null || json.noteFile == '')
+					noteFile = json.noteFile;
+				else
+					noteFile = 'NOTE_assets';
+
+				if (json.notePath != null || json.notePath == '')
+					notePath = json.notePath;
+				else
+					notePath = 'shared';
+
 				//trace('Loaded file to character ' + curCharacter);
 		}
 		originalFlipX = flipX;

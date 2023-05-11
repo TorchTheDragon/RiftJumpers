@@ -39,7 +39,7 @@ class NoteSplash extends FlxSprite
 
 		if(folder == null) {
 			folder = 'shared';
-			if(PlayState.SONG.splashFolder != null && PlayState.SONG.splashFolder.length > 0) folder = PlayState.SONG.splashSkin;
+			if(PlayState.SONG.splashFolder != null && PlayState.SONG.splashFolder.length > 0) folder = PlayState.SONG.splashFolder;
 		}
 
 		if(textureLoaded != texture) {
@@ -58,7 +58,7 @@ class NoteSplash extends FlxSprite
 	function loadAnims(skin:String, ?folder:String = 'shared') {
 		if(folder == null || folder == '') folder = 'shared';
 
-		if(folder == 'customnotes') skin = 'splashes/' + skin;
+		// if(folder == 'customnotes') skin = 'splashes/' + skin; // I forgot this was here lol - Torch
 
 		frames = Paths.getSparrowAtlas(skin, folder);
 		for (i in 1...3) {

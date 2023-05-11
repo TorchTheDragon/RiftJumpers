@@ -35,7 +35,7 @@ class StrumNote extends FlxSprite
 		return value;
 	}
 
-	public function new(x:Float, y:Float, leData:Int, player:Int) {
+	public function new(x:Float, y:Float, leData:Int, player:Int, ?file:String, ?path:String) {
 		colorSwap = new ColorSwap();
 		shader = colorSwap.shader;
 		noteData = leData;
@@ -43,6 +43,7 @@ class StrumNote extends FlxSprite
 		this.noteData = leData;
 		super(x, y);
 
+		/*
 		var skin:String = 'NOTE_assets';
 		if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
 		texture = skin; //Load texture and anims
@@ -50,6 +51,35 @@ class StrumNote extends FlxSprite
 		var daPath:String = 'shared';
 		if(PlayState.SONG.arrowFolder != null && PlayState.SONG.arrowFolder.length > 1) daPath = PlayState.SONG.arrowFolder;
 		folder = daPath;
+		*/
+		var skin:String = 'NOTE_assets';
+		var daPath:String = 'shared';
+
+		if (path == null && file != null)
+		{
+			daPath = 'shared';
+			path = daPath;
+			texture = file;
+			folder = path;
+		}
+		else if (file == null && path != null)
+		{
+			file = 'NOTE_assets';
+			path = daPath;
+			texture = file;
+			folder = path;
+		}
+		else if (file == null && path == null)
+		{ // Torch - this should just be a failsafe
+			if(PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
+			file = skin;
+			texture = file; //Load texture and anims
+
+			// Torch - this is temp till I edit the Charting State
+			if(PlayState.SONG.arrowFolder != null && PlayState.SONG.arrowFolder.length > 1) daPath = PlayState.SONG.arrowFolder;
+			path = daPath;
+			folder = path;
+		}
 
 		scrollFactor.set();
 	}
@@ -61,10 +91,10 @@ class StrumNote extends FlxSprite
 
 		if(PlayState.isPixelStage)
 		{
-			loadGraphic(Paths.image('pixelUI/' + texture));
+			loadGraphic(Paths.image('pixelUI/' + texture, folder));
 			width = width / 4;
 			height = height / 5;
-			loadGraphic(Paths.image('pixelUI/' + texture), true, Math.floor(width), Math.floor(height));
+			loadGraphic(Paths.image('pixelUI/' + texture, folder), true, Math.floor(width), Math.floor(height));
 
 			antialiasing = false;
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));

@@ -2755,6 +2755,94 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		for (i in unspawnNotes)
+		{
+			if (i.mustPress && (i.noteType == '' || i.noteType == null))
+			{
+				i.texture = boyfriend.noteFile;
+				i.folder = boyfriend.notePath;
+				i.reloadNote('', boyfriend.noteFile);
+				if (i.isSustainNote)
+				{
+					i.animation.play(i.colArray[i.noteData] + 'holdend');
+					i.updateHitbox();
+					if (i.prevNote.isSustainNote)
+					{
+						i.prevNote.animation.play(i.colArray[i.noteData] + 'hold');
+						i.prevNote.updateHitbox();
+					}
+				}
+				else
+				{
+					i.animation.play(i.colArray[i.noteData] + 'Scroll');
+				}
+			}
+			else if (!i.mustPress && (i.noteType == '' || i.noteType == null))
+			{
+				i.texture = dad.noteFile;
+				i.folder = dad.notePath;
+				i.reloadNote('', dad.noteFile);
+				if (i.isSustainNote)
+				{
+					i.animation.play(i.colArray[i.noteData] + 'holdend');
+					i.updateHitbox();
+					if (i.prevNote.isSustainNote)
+					{
+						i.prevNote.animation.play(i.colArray[i.noteData] + 'hold');
+						i.prevNote.updateHitbox();
+					}
+				}
+				else
+				{
+					i.animation.play(i.colArray[i.noteData] + 'Scroll');
+				}
+			}
+		}
+
+		for (i in unspawnOtherNotes)
+		{
+			if (i.mustPress/* && (i.noteType == '' || i.noteType == null)*/ && i.noteType == 'Behind Note')
+			{
+				i.texture = otherBF.noteFile;
+				i.folder = otherBF.notePath;
+				i.reloadNote('', otherBF.noteFile);
+				if (i.isSustainNote)
+				{
+					i.animation.play(i.colArray[i.noteData] + 'holdend');
+					i.updateHitbox();
+					if (i.prevNote.isSustainNote)
+					{
+						i.prevNote.animation.play(i.colArray[i.noteData] + 'hold');
+						i.prevNote.updateHitbox();
+					}
+				}
+				else
+				{
+					i.animation.play(i.colArray[i.noteData] + 'Scroll');
+				}
+			}
+			else if (!i.mustPress/* && (i.noteType == '' || i.noteType == null)*/ && i.noteType == 'Behind Note')
+			{
+				i.texture = mom.noteFile;
+				i.folder = mom.notePath;
+				i.reloadNote('', mom.noteFile);
+				if (i.isSustainNote)
+				{
+					i.animation.play(i.colArray[i.noteData] + 'holdend');
+					i.updateHitbox();
+					if (i.prevNote.isSustainNote)
+					{
+						i.prevNote.animation.play(i.colArray[i.noteData] + 'hold');
+						i.prevNote.updateHitbox();
+					}
+				}
+				else
+				{
+					i.animation.play(i.colArray[i.noteData] + 'Scroll');
+				}
+			}
+		}
+
 		// trace(unspawnNotes.length);
 		// playerCounter += 1;
 
@@ -2902,10 +2990,14 @@ class PlayState extends MusicBeatState
 
 			if (player == 1)
 			{
+				babyArrow.texture = boyfriend.noteFile;
+				babyArrow.folder = boyfriend.notePath;
 				playerStrums.add(babyArrow);
 			}
 			else
 			{
+				babyArrow.texture = dad.noteFile;
+				babyArrow.folder = dad.notePath;
 				if(ClientPrefs.middleScroll)
 				{
 					babyArrow.x += 310;

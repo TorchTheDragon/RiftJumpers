@@ -626,7 +626,9 @@ class ChartingState extends MusicBeatState
 		noteSkinFolderInputText = new FlxUIInputText(noteSkinInputText.x + 160, noteSkinInputText.y, 100, folder, 8);
 		blockPressWhileTypingOn.push(noteSkinFolderInputText);
 
-		noteSplashesInputText = new FlxUIInputText(noteSkinInputText.x, noteSkinInputText.y + 35, 150, _song.splashSkin, 8);
+		var splash = PlayState.SONG.splashSkin;
+		if (splash == null) splash = '';
+		noteSplashesInputText = new FlxUIInputText(noteSkinInputText.x, noteSkinInputText.y + 35, 150, splash, 8);
 		blockPressWhileTypingOn.push(noteSplashesInputText);
 
 		var folder2 = PlayState.SONG.splashFolder;

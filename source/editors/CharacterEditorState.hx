@@ -183,7 +183,8 @@ class CharacterEditorState extends MusicBeatState
 		UI_characterbox = new FlxUITabMenu(null, tabs, true);
 		UI_characterbox.cameras = [camMenu];
 
-		UI_characterbox.resize(350, 250);
+		//UI_characterbox.resize(350, 250);
+		UI_characterbox.resize(350, 300);
 		UI_characterbox.x = UI_box.x - 100;
 		UI_characterbox.y = UI_box.y + UI_box.height;
 		UI_characterbox.scrollFactor.set();
@@ -408,7 +409,9 @@ class CharacterEditorState extends MusicBeatState
 				0
 			],
 			"sing_duration": 6.1,
-			"scale": 1
+			"scale": 1,
+			"noteFile": "NOTE_assets",
+			"notePath": "shared"
 		}';
 
 	var charDropDown:FlxUIDropDownMenuCustom;
@@ -470,6 +473,10 @@ class CharacterEditorState extends MusicBeatState
 				character.originalFlipX = parsedJson.flip_x;
 				character.healthIcon = parsedJson.healthicon;
 				character.healthColorArray = parsedJson.healthbar_colors;
+
+				character.noteFile = parsedJson.noteFile;
+				character.notePath = parsedJson.notePath;
+
 				character.setPosition(character.positionArray[0] + OFFSET_X + 100, character.positionArray[1]);
 			}
 
@@ -508,6 +515,9 @@ class CharacterEditorState extends MusicBeatState
 	var healthColorStepperR:FlxUINumericStepper;
 	var healthColorStepperG:FlxUINumericStepper;
 	var healthColorStepperB:FlxUINumericStepper;
+
+	var customNoteFile:FlxUIInputText;
+	var customNotePath:FlxUIInputText;
 
 	function addCharacterUI() {
 		var tab_group = new FlxUI(null, UI_box);
@@ -576,6 +586,15 @@ class CharacterEditorState extends MusicBeatState
 		healthColorStepperG = new FlxUINumericStepper(singDurationStepper.x + 65, saveCharacterButton.y, 20, char.healthColorArray[1], 0, 255, 0);
 		healthColorStepperB = new FlxUINumericStepper(singDurationStepper.x + 130, saveCharacterButton.y, 20, char.healthColorArray[2], 0, 255, 0);
 
+		customNoteFile = new FlxUIInputText(healthColorStepperR.x, healthColorStepperR.y + 40, 75, char.noteFile, 8);
+		customNotePath = new FlxUIInputText(customNoteFile.x + 80, customNoteFile.y, 75, char.notePath, 8);
+		var setNoteVals:FlxButton = new FlxButton(customNotePath.x + 80, customNotePath.y, "Set Note Values", function()
+		{
+			char.noteFile = customNoteFile.text;
+			char.notePath = customNotePath.text;
+		});
+		setNoteVals.width = setNoteVals.width + 20;
+
 		tab_group.add(new FlxText(15, imageInputText.y - 18, 0, 'Image file name:'));
 		tab_group.add(new FlxText(15, healthIconInputText.y - 18, 0, 'Health icon name:'));
 		tab_group.add(new FlxText(15, singDurationStepper.y - 18, 0, 'Sing Animation length:'));
@@ -583,6 +602,10 @@ class CharacterEditorState extends MusicBeatState
 		tab_group.add(new FlxText(positionXStepper.x, positionXStepper.y - 18, 0, 'Character X/Y:'));
 		tab_group.add(new FlxText(positionCameraXStepper.x, positionCameraXStepper.y - 18, 0, 'Camera X/Y:'));
 		tab_group.add(new FlxText(healthColorStepperR.x, healthColorStepperR.y - 18, 0, 'Health bar R/G/B:'));
+
+		tab_group.add(new FlxText(customNoteFile.x, customNoteFile.y - 18, 0, 'Note Assets:'));
+		tab_group.add(new FlxText(customNotePath.x, customNotePath.y - 18, 0, 'Notes Path:'));
+
 		tab_group.add(imageInputText);
 		tab_group.add(reloadImage);
 		tab_group.add(decideIconColor);
@@ -598,6 +621,11 @@ class CharacterEditorState extends MusicBeatState
 		tab_group.add(healthColorStepperR);
 		tab_group.add(healthColorStepperG);
 		tab_group.add(healthColorStepperB);
+
+		tab_group.add(customNoteFile);
+		tab_group.add(customNotePath);
+		tab_group.add(setNoteVals);
+
 		tab_group.add(saveCharacterButton);
 		UI_characterbox.addGroup(tab_group);
 	}
@@ -986,6 +1014,10 @@ class CharacterEditorState extends MusicBeatState
 			scaleStepper.value = char.jsonScale;
 			flipXCheckBox.checked = char.originalFlipX;
 			noAntialiasingCheckBox.checked = char.noAntialiasing;
+
+			customNoteFile.text = char.noteFile;
+			customNotePath.text = char.notePath;
+
 			resetHealthBarColor();
 			leHealthIcon.changeIcon(healthIconInputText.text);
 			positionXStepper.value = char.positionArray[0];
@@ -1284,7 +1316,10 @@ class CharacterEditorState extends MusicBeatState
 
 			"flip_x": char.originalFlipX,
 			"no_antialiasing": char.noAntialiasing,
-			"healthbar_colors": char.healthColorArray
+			"healthbar_colors": char.healthColorArray,
+
+			"noteFile": char.noteFile,
+			"notePath": char.notePath
 		};
 
 		var data:String = Json.stringify(json, "\t");
