@@ -33,9 +33,11 @@ typedef SwagSong =
 	var splashFolder:String;
 
 	var secondOpponentAlive:Bool;
-	var secondBFAlive:Bool;
 	var secondOpponent:String;
+	var secondOppPos:Array<Float>;
+	var secondBFAlive:Bool;
 	var secondBF:String;
+	var secondBFPos:Array<Float>;
 }
 
 class Song
@@ -55,9 +57,11 @@ class Song
 	public var player2:String = 'dad';
 	public var gfVersion:String = 'gf';
 	public var secondOpponentAlive:Bool = false;
-	public var secondBFAlive:Bool = false;
 	public var secondOpponent:String = 'mom';
+	public var secondOppPos:Array<Float> = [100, 100];
+	public var secondBFAlive:Bool = false;
 	public var secondBF:String = 'pico-player';
+	public var secondBFPos:Array<Float> = [770, 100];
 
 	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format
 	{
@@ -79,6 +83,16 @@ class Song
 		if (songJson.secondBFAlive == null)
 		{
 			songJson.secondBFAlive = false;
+		}
+
+		if (songJson.secondOppPos == null)
+		{
+			songJson.secondOppPos = [100, 100];
+		}
+
+		if (songJson.secondBFPos == null)
+		{
+			songJson.secondBFPos = [770, 100];
 		}
 		
 		if(songJson.gfVersion == null)

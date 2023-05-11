@@ -236,7 +236,9 @@ class ChartingState extends MusicBeatState
 				secondOpponentAlive: false,
 				secondBFAlive: false,
 				secondOpponent: 'mom',
-				secondBF: 'pico-player'
+				secondBF: 'pico-player',
+				secondOppPos: [100, 100],
+				secondBFPos: [770, 100]
 			};
 			addSection();
 			PlayState.SONG = _song;
@@ -304,7 +306,8 @@ class ChartingState extends MusicBeatState
 		Conductor.changeBPM(_song.bpm);
 		Conductor.mapBPMChanges(_song);
 
-		bpmTxt = new FlxText(1000, 50, 0, "", 16);
+		// bpmTxt = new FlxText(1000, 50, 0, "", 16); // Default Value
+		bpmTxt = new FlxText(1020, 50, 0, "", 16);
 		bpmTxt.scrollFactor.set();
 		add(bpmTxt);
 
@@ -338,6 +341,7 @@ class ChartingState extends MusicBeatState
 
 		var tabs = [
 			{name: "Song", label: 'Song'},
+			{name: "Characters", label: 'Characters'},
 			{name: "Section", label: 'Section'},
 			{name: "Note", label: 'Note'},
 			{name: "Events", label: 'Events'},
@@ -346,7 +350,8 @@ class ChartingState extends MusicBeatState
 
 		UI_box = new FlxUITabMenu(null, tabs, true);
 
-		UI_box.resize(300, 400);
+		// UI_box.resize(300, 400); // Default Size
+		UI_box.resize(350, 400);
 		UI_box.x = 640 + GRID_SIZE / 2;
 		UI_box.y = 25;
 		UI_box.scrollFactor.set();
@@ -379,6 +384,7 @@ class ChartingState extends MusicBeatState
 		add(UI_box);
 
 		addSongUI();
+		addCharacterUI();
 		addSectionUI();
 		addNoteUI();
 		addEventsUI();
@@ -539,6 +545,7 @@ class ChartingState extends MusicBeatState
 		}
 		#end
 
+		/*
 		var player1DropDown = new FlxUIDropDownMenuCustom(10, stepperSpeed.y + 45, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			_song.player1 = characters[Std.parseInt(character)];
@@ -562,34 +569,7 @@ class ChartingState extends MusicBeatState
 		});
 		player2DropDown.selectedLabel = _song.player2;
 		blockPressWhileScrolling.push(player2DropDown);
-
-		var otherOpponentDropdown = new FlxUIDropDownMenuCustom(gfVersionDropDown.x + 140, gfVersionDropDown.y, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String) 
-		{
-			_song.secondOpponent = characters[Std.parseInt(character)];
-		});
-		otherOpponentDropdown.selectedLabel = _song.secondOpponent;
-		blockPressWhileScrolling.push(otherOpponentDropdown);
-
-		var otherBFDropdown = new FlxUIDropDownMenuCustom(player2DropDown.x + 140, player2DropDown.y, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String) 
-		{
-			_song.secondBF = characters[Std.parseInt(character)];
-		});
-		otherBFDropdown.selectedLabel = _song.secondBF;
-		blockPressWhileScrolling.push(otherBFDropdown);
-
-		var otherOpponentActive = new FlxUICheckBox(otherOpponentDropdown.x + 65, otherOpponentDropdown.y - 20, null, null, "OPP2 On?", 100);
-		otherOpponentActive.checked = _song.secondOpponentAlive;
-		otherOpponentActive.callback = function()
-		{
-			_song.secondOpponentAlive = otherOpponentActive.checked;
-		};
-
-		var otherBFActive = new FlxUICheckBox(otherBFDropdown.x + 65, otherBFDropdown.y - 20, null, null, "BF2 On?", 100);
-		otherBFActive.checked = _song.secondBFAlive;
-		otherBFActive.callback = function()
-		{
-			_song.secondBFAlive = otherBFActive.checked;
-		};
+		*/
 
 		#if MODS_ALLOWED
 		var directories:Array<String> = [Paths.mods('stages/'), Paths.mods(Paths.currentModDirectory + '/stages/'), Paths.getPreloadPath('stages/')];
@@ -629,7 +609,7 @@ class ChartingState extends MusicBeatState
 
 		if(stages.length < 1) stages.push('stage');
 
-		stageDropDown = new FlxUIDropDownMenuCustom(player1DropDown.x + 140, player1DropDown.y, FlxUIDropDownMenuCustom.makeStrIdLabelArray(stages, true), function(character:String)
+		stageDropDown = new FlxUIDropDownMenuCustom(150, 115, FlxUIDropDownMenuCustom.makeStrIdLabelArray(stages, true), function(character:String)
 		{
 			_song.stage = stages[Std.parseInt(character)];
 		});
@@ -638,7 +618,7 @@ class ChartingState extends MusicBeatState
 
 		var skin = PlayState.SONG.arrowSkin;
 		if(skin == null) skin = '';
-		noteSkinInputText = new FlxUIInputText(player2DropDown.x, player2DropDown.y + 50, 150, skin, 8);
+		noteSkinInputText = new FlxUIInputText(10, 200, 150, skin, 8);
 		blockPressWhileTypingOn.push(noteSkinInputText);
 
 		var folder = PlayState.SONG.arrowFolder;
@@ -680,31 +660,146 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(noteSkinFolderInputText);
 		tab_group_song.add(noteSplashesInputText);
 		tab_group_song.add(noteSplashesFolderInputText);
-		tab_group_song.add(otherOpponentDropdown);
-		tab_group_song.add(otherBFDropdown);
-		tab_group_song.add(otherOpponentActive);
-		tab_group_song.add(otherBFActive);
+		//tab_group_song.add(otherOpponentDropdown);
+		//tab_group_song.add(otherBFDropdown);
+		//tab_group_song.add(otherOpponentActive);
+		//tab_group_song.add(otherBFActive);
 		tab_group_song.add(new FlxText(stepperBPM.x, stepperBPM.y - 15, 0, 'Song BPM:'));
 		tab_group_song.add(new FlxText(stepperBPM.x + 100, stepperBPM.y - 15, 0, 'Song Offset:'));
 		tab_group_song.add(new FlxText(stepperSpeed.x, stepperSpeed.y - 15, 0, 'Song Speed:'));
-		tab_group_song.add(new FlxText(player2DropDown.x, player2DropDown.y - 15, 0, 'Opponent:'));
-		tab_group_song.add(new FlxText(gfVersionDropDown.x, gfVersionDropDown.y - 15, 0, 'Girlfriend:'));
-		tab_group_song.add(new FlxText(player1DropDown.x, player1DropDown.y - 15, 0, 'Boyfriend:'));
-		tab_group_song.add(new FlxText(otherOpponentDropdown.x, otherOpponentDropdown.y - 15, 0, 'Opponent 2:'));
-		tab_group_song.add(new FlxText(otherBFDropdown.x, otherBFDropdown.y - 15, 0, 'BF 2:'));
+		//tab_group_song.add(new FlxText(player2DropDown.x, player2DropDown.y - 15, 0, 'Opponent:'));
+		//tab_group_song.add(new FlxText(gfVersionDropDown.x, gfVersionDropDown.y - 15, 0, 'Girlfriend:'));
+		//tab_group_song.add(new FlxText(player1DropDown.x, player1DropDown.y - 15, 0, 'Boyfriend:'));
+		//tab_group_song.add(new FlxText(otherOpponentDropdown.x, otherOpponentDropdown.y - 15, 0, 'Opponent 2:'));
+		//tab_group_song.add(new FlxText(otherBFDropdown.x, otherBFDropdown.y - 15, 0, 'BF 2:'));
 		tab_group_song.add(new FlxText(stageDropDown.x, stageDropDown.y - 15, 0, 'Stage:'));
 		tab_group_song.add(new FlxText(noteSkinInputText.x, noteSkinInputText.y - 15, 0, 'Note Texture:'));
 		tab_group_song.add(new FlxText(noteSkinFolderInputText.x, noteSkinFolderInputText.y - 15, 0, 'Texture Path:'));
 		tab_group_song.add(new FlxText(noteSplashesInputText.x, noteSplashesInputText.y - 15, 0, 'Note Splashes Texture:'));
 		tab_group_song.add(new FlxText(noteSplashesFolderInputText.x, noteSplashesFolderInputText.y -15, 0, 'Splashes Path:'));
-		tab_group_song.add(player2DropDown);
-		tab_group_song.add(gfVersionDropDown);
-		tab_group_song.add(player1DropDown);
+		//tab_group_song.add(player2DropDown);
+		//tab_group_song.add(gfVersionDropDown);
+		//tab_group_song.add(player1DropDown);
 		tab_group_song.add(stageDropDown);
 
 		UI_box.addGroup(tab_group_song);
 
 		FlxG.camera.follow(camPos);
+	}
+
+	var otherOpponentX:FlxUINumericStepper;
+	var otherOpponentY:FlxUINumericStepper;
+	var otherBFX:FlxUINumericStepper;
+	var otherBFY:FlxUINumericStepper;
+
+	function addCharacterUI():Void
+	{
+		var tab_group_characters = new FlxUI(null, UI_box);
+		tab_group_characters.name = 'Characters';
+
+		var tempMap:Map<String, Bool> = new Map<String, Bool>();
+		var characters:Array<String> = CoolUtil.coolTextFile(Paths.txt('characterList'));
+		for (i in 0...characters.length) {
+			tempMap.set(characters[i], true);
+		}
+
+		// If this looks good, uncomment this - Torch
+		var player1DropDown = new FlxUIDropDownMenuCustom(10, 70, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String)
+		{
+			_song.player1 = characters[Std.parseInt(character)];
+			updateHeads();
+		});
+		player1DropDown.selectedLabel = _song.player1;
+		blockPressWhileScrolling.push(player1DropDown);
+
+		var gfVersionDropDown = new FlxUIDropDownMenuCustom(player1DropDown.x, player1DropDown.y + 40, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String)
+		{
+			_song.gfVersion = characters[Std.parseInt(character)];
+			updateHeads();
+		});
+		gfVersionDropDown.selectedLabel = _song.gfVersion;
+		blockPressWhileScrolling.push(gfVersionDropDown);
+
+		var player2DropDown = new FlxUIDropDownMenuCustom(player1DropDown.x, gfVersionDropDown.y + 40, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String)
+		{
+			_song.player2 = characters[Std.parseInt(character)];
+			updateHeads();
+		});
+		player2DropDown.selectedLabel = _song.player2;
+		blockPressWhileScrolling.push(player2DropDown);
+
+		var otherOpponentDropdown = new FlxUIDropDownMenuCustom(player1DropDown.x, player2DropDown.y + 40, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String) 
+		{
+			_song.secondOpponent = characters[Std.parseInt(character)];
+		});
+		otherOpponentDropdown.selectedLabel = _song.secondOpponent;
+		blockPressWhileScrolling.push(otherOpponentDropdown);
+
+		var otherOpponentActive = new FlxUICheckBox(otherOpponentDropdown.x, otherOpponentDropdown.y + 30, null, null, "OPP2 On?", 100);
+		otherOpponentActive.checked = _song.secondOpponentAlive;
+		otherOpponentActive.callback = function()
+		{
+			_song.secondOpponentAlive = otherOpponentActive.checked;
+		};
+
+		otherOpponentX = new FlxUINumericStepper(otherOpponentDropdown.x + 125, otherOpponentDropdown.y, 1, 1, -2000, 2000, 3);
+		otherOpponentX.value = _song.secondOppPos[0];
+		otherOpponentX.name = 'OPP2 X';
+		blockPressWhileTypingOnStepper.push(otherOpponentX);
+
+		otherOpponentY = new FlxUINumericStepper(otherOpponentX.x + 75, otherOpponentDropdown.y, 1, 1, -2000, 2000, 3);
+		otherOpponentY.value = _song.secondOppPos[1];
+		otherOpponentY.name = 'OPP2 Y';
+		blockPressWhileTypingOnStepper.push(otherOpponentY);
+
+		var otherBFDropdown = new FlxUIDropDownMenuCustom(otherOpponentDropdown.x, otherOpponentActive.y + 40, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String) 
+		{
+			_song.secondBF = characters[Std.parseInt(character)];
+		});
+		otherBFDropdown.selectedLabel = _song.secondBF;
+		blockPressWhileScrolling.push(otherBFDropdown);
+
+		var otherBFActive = new FlxUICheckBox(otherBFDropdown.x, otherBFDropdown.y + 30, null, null, "BF2 On?", 100);
+		otherBFActive.checked = _song.secondBFAlive;
+		otherBFActive.callback = function()
+		{
+			_song.secondBFAlive = otherBFActive.checked;
+		};
+
+		otherBFX = new FlxUINumericStepper(otherBFDropdown.x + 125, otherBFDropdown.y, 1, 0, -2000, 2000, 3);
+		otherBFX.value = _song.secondBFPos[0];
+		otherBFX.name = 'BF2 X';
+		blockPressWhileTypingOnStepper.push(otherBFX);
+
+		otherBFY = new FlxUINumericStepper(otherBFX.x + 75, otherBFDropdown.y, 1, 0, -2000, 2000, 3);
+		otherBFY.value = _song.secondBFPos[1];
+		otherBFY.name = 'BF2 Y';
+		blockPressWhileTypingOnStepper.push(otherBFY);
+		
+		tempMap.clear();
+
+		tab_group_characters.add(player2DropDown);
+		tab_group_characters.add(gfVersionDropDown);
+		tab_group_characters.add(player1DropDown);
+		tab_group_characters.add(otherOpponentDropdown);
+		tab_group_characters.add(otherBFDropdown);
+		tab_group_characters.add(otherOpponentActive);
+		tab_group_characters.add(otherBFActive);
+		tab_group_characters.add(otherOpponentX);
+		tab_group_characters.add(otherOpponentY);
+		tab_group_characters.add(otherBFX);
+		tab_group_characters.add(otherBFY);
+		tab_group_characters.add(new FlxText(otherOpponentX.x, otherOpponentX.y - 15, 0, 'Opponent 2 X:'));
+		tab_group_characters.add(new FlxText(otherOpponentY.x, otherOpponentY.y - 15, 0, 'Opponent 2 Y:'));
+		tab_group_characters.add(new FlxText(otherBFX.x, otherBFX.y - 15, 0, 'BF 2 X:'));
+		tab_group_characters.add(new FlxText(otherBFY.x, otherBFY.y - 15, 0, 'BF 2 Y:'));
+		tab_group_characters.add(new FlxText(otherOpponentDropdown.x, otherOpponentDropdown.y - 15, 0, 'Opponent 2:'));
+		tab_group_characters.add(new FlxText(otherBFDropdown.x, otherBFDropdown.y - 15, 0, 'BF 2:'));
+		tab_group_characters.add(new FlxText(player2DropDown.x, player2DropDown.y - 15, 0, 'Opponent:'));
+		tab_group_characters.add(new FlxText(gfVersionDropDown.x, gfVersionDropDown.y - 15, 0, 'Girlfriend:'));
+		tab_group_characters.add(new FlxText(player1DropDown.x, player1DropDown.y - 15, 0, 'Boyfriend:'));
+
+		UI_box.addGroup(tab_group_characters);
 	}
 
 	var stepperBeats:FlxUINumericStepper;
@@ -1597,6 +1692,9 @@ class ChartingState extends MusicBeatState
 	{
 		curStep = recalculateSteps();
 
+		_song.secondOppPos = [otherOpponentX.value, otherOpponentY.value];
+		_song.secondBFPos = [otherBFX.value, otherBFY.value];
+
 		if(FlxG.sound.music.time < 0) {
 			FlxG.sound.music.pause();
 			FlxG.sound.music.time = 0;
@@ -1631,7 +1729,6 @@ class ChartingState extends MusicBeatState
 		}
 		FlxG.watch.addQuick('daBeat', curBeat);
 		FlxG.watch.addQuick('daStep', curStep);
-
 
 		if (FlxG.mouse.x > gridBG.x
 			&& FlxG.mouse.x < gridBG.x + gridBG.width

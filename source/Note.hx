@@ -175,10 +175,11 @@ class Note extends FlxSprite
 					gfNote = true;
 
 				case 'Behind Note':
-					ignoreNote = mustPress;
+					//ignoreNote = true;
 					colorSwap.hue = 0;
 					colorSwap.saturation = -50;
 					colorSwap.brightness = 0;
+					alpha = 0.1;
 			}
 			noteType = value;
 		}
