@@ -69,7 +69,7 @@ class ChartingState extends MusicBeatState
 		'GF Sing',
 		'No Animation',
 		'Lights Out',
-		'Behind Note'
+		'Behind Note' // DON'T USE IN ACTUAL CHARTING, it won't do anything and will only act as an actual note you can hit, could be good for planing it out later though.
 	];
 	private var noteTypeIntMap:Map<Int, String> = new Map<Int, String>();
 	private var noteTypeMap:Map<String, Null<Int>> = new Map<String, Null<Int>>();
@@ -224,7 +224,7 @@ class ChartingState extends MusicBeatState
 				bpm: 150.0,
 				needsVoices: true,
 				arrowSkin: '',
-				splashSkin: 'noteSplashes',//idk it would crash if i didn't
+				splashSkin: '',//idk it would crash if i didn't
 				player1: 'bf',
 				player2: 'dad',
 				gfVersion: 'gf',
