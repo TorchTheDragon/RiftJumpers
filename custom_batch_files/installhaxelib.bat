@@ -32,5 +32,6 @@ haxelib git systools https://github.com/haya3218/systools
 haxelib run lime rebuild systools windows
 haxelib install actuate
 haxelib list
+haxelib --global update haxelib
 pause
 RefreshEnv

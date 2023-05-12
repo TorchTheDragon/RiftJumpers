@@ -706,7 +706,7 @@ class ChartingState extends MusicBeatState
 		}
 
 		// If this looks good, uncomment this - Torch
-		var player1DropDown = new FlxUIDropDownMenuCustom(10, 70, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String)
+		var player1DropDown = new FlxUIDropDownMenuCustom(10, 15, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			_song.player1 = characters[Std.parseInt(character)];
 			updateHeads();
@@ -744,12 +744,12 @@ class ChartingState extends MusicBeatState
 			_song.secondOpponentAlive = otherOpponentActive.checked;
 		};
 
-		otherOpponentX = new FlxUINumericStepper(otherOpponentDropdown.x + 125, otherOpponentDropdown.y, 1, 1, -2000, 2000, 3);
+		otherOpponentX = new FlxUINumericStepper(otherOpponentDropdown.x + 125, otherOpponentDropdown.y + 7, 1, 1, -2000, 2000, 3);
 		otherOpponentX.value = _song.secondOppPos[0];
 		otherOpponentX.name = 'OPP2 X';
 		blockPressWhileTypingOnStepper.push(otherOpponentX);
 
-		otherOpponentY = new FlxUINumericStepper(otherOpponentX.x + 75, otherOpponentDropdown.y, 1, 1, -2000, 2000, 3);
+		otherOpponentY = new FlxUINumericStepper(otherOpponentX.x + 75, otherOpponentX.y, 1, 1, -2000, 2000, 3);
 		otherOpponentY.value = _song.secondOppPos[1];
 		otherOpponentY.name = 'OPP2 Y';
 		blockPressWhileTypingOnStepper.push(otherOpponentY);
@@ -768,12 +768,12 @@ class ChartingState extends MusicBeatState
 			_song.secondBFAlive = otherBFActive.checked;
 		};
 
-		otherBFX = new FlxUINumericStepper(otherBFDropdown.x + 125, otherBFDropdown.y, 1, 0, -2000, 2000, 3);
+		otherBFX = new FlxUINumericStepper(otherBFDropdown.x + 125, otherBFDropdown.y + 7, 1, 0, -2000, 2000, 3);
 		otherBFX.value = _song.secondBFPos[0];
 		otherBFX.name = 'BF2 X';
 		blockPressWhileTypingOnStepper.push(otherBFX);
 
-		otherBFY = new FlxUINumericStepper(otherBFX.x + 75, otherBFDropdown.y, 1, 0, -2000, 2000, 3);
+		otherBFY = new FlxUINumericStepper(otherBFX.x + 75, otherBFX.y, 1, 0, -2000, 2000, 3);
 		otherBFY.value = _song.secondBFPos[1];
 		otherBFY.name = 'BF2 Y';
 		blockPressWhileTypingOnStepper.push(otherBFY);

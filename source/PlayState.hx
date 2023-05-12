@@ -2679,7 +2679,8 @@ class PlayState extends MusicBeatState
 						swagNote.mustPress = gottaHitNote;
 						swagNote.sustainLength = songNotes[2];
 						swagNote.noteType = songNotes[3];
-						swagNote.noteType = 'Behind Note';
+						if ((swagNote.noteType != null || swagNote.noteType != '')) 
+							swagNote.noteType = 'Behind Note';
 						swagNote.scrollFactor.set();
 
 						var susLength:Float = swagNote.sustainLength;
